@@ -5,9 +5,9 @@
         {{Auth::user()->name}}
     @else
         <div class="text-center" style="margin-top: 250px;">
-            <h1>Sign up</h1>
-            <p style>背景画像</p>
-             {!! link_to_route('signup.get', 'Sign up now!', [], ['class' => 'btn btn-lg btn-primary']) !!}
+            
+             <h1>{!! link_to_route('signup.get', 'Sign up', [], ['style' => 'color:white;' , 'class' => 'nav-link']) !!}</h1>
+             
         </div>
     @endif
 @endsection
