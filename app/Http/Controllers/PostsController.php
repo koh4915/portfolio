@@ -15,7 +15,7 @@ class PostsController extends Controller
         $data = [];
         if(\Auth::check()) {
             $user = \Auth::user();
-            $posts = $user->posts()->orderBy('created_at','desc')->paginate(10);
+            $posts = $user->posts()->orderBy('created_at','desc')->paginate(5);
             
             $data = [
                 'user' => $user,
@@ -30,6 +30,8 @@ class PostsController extends Controller
     public function create()
     {
         $post = new Post;
+        
+        // $post = Post::where('user_id')->first();
         
         return view('posts.create',['post' => $post,]);
     }

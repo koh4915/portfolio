@@ -8,6 +8,7 @@ use App\User;  //追加
 
 class UsersController extends Controller
 {
+    // ユーザー一覧
     public function index()
     {
         $users = User::orderBy('id','desc')->paginate(10);
@@ -17,10 +18,11 @@ class UsersController extends Controller
         ]);
     }
     
+    // ユーザー詳細
     public function show($id)
     {
         $user = User::find($id);
-        $posts = $user->posts()->orderBy('created_at','desc')->paginate(10);
+        $posts = $user->posts()->orderBy('created_at','desc')->paginate(5);
         
         $data = [
             'user' => $user,
