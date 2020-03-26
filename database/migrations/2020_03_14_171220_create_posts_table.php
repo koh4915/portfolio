@@ -16,11 +16,11 @@ class CreatePostsTable extends Migration
         Schema::create('posts', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id')->unsigned()->index();
-            $table->string('date');
-            $table->string('workout');
-            $table->float('weight')->unsigned();
-            $table->integer('repetition')->unsigned();
-            $table->integer('set')->unsigned();
+            $table->string('date')->nullable();
+            $table->string('workout')->nullable();
+            $table->float('weight')->nullable()->unsigned();
+            $table->integer('repetition')->nullable()->unsigned();
+            $table->integer('set')->nullable()->unsigned();
             $table->timestamps();
             
             // 外部キー制約

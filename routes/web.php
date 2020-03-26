@@ -29,3 +29,6 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('users', 'UsersController', ['only' => ['index', 'show']]);
     Route::resource('posts', 'PostsController', ['only' => ['store', 'destroy']]);
 });
+
+Route::get('record', 'UsersController@record')->name('record');
+Route::get('gallery', 'UsersController@gallery')->name('gallery');

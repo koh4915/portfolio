@@ -1,13 +1,13 @@
 <!--投稿一覧表示-->
 <ul class="list-unstyled">
-    @foreach ($posts as $post)
+    
         <li class="media mb-3">
-            <img class="mr-2 rounded" src="{{ Gravatar::src($post->user->email, 80) }}" alt="">
+            <img class="mr-2 rounded" src="{{ Gravatar::src($user->email, 80) }}" alt="">
             <div class="media-body">
                 <div class="text-left">
-                    {!! link_to_route('users.show', $post->user->name, ['id' => $post->user->id]) !!} <span class="text-muted">posted at {{ $post->created_at }}</span>
+                    {!! link_to_route('users.show', $user->name, ['id' => $user->id]) !!}
                 </div>
-                <div>
+                <div class>
                     <table class="table table-bordered">
                         <thead>
                             <tr>
@@ -33,6 +33,6 @@
                 </div>
             </div>
         </li>
-    @endforeach
+        
 </ul>
 {{ $posts->links('pagination::bootstrap-4') }}

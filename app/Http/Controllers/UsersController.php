@@ -33,4 +33,19 @@ class UsersController extends Controller
         
         return view('users.show',$data);
     }
+    
+    
+    // カレンダーページ
+    public function record(){
+        
+        return view('users.record');
+    }
+    
+    
+    // ギャラリーページ
+    public function gallery(){
+        
+        return view('users.gallery');
+    }
+    
 }

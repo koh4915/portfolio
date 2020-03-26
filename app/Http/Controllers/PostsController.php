@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 
 use App\Post;
 
+use Validator;
+
+
 class PostsController extends Controller
 {
     
@@ -15,7 +18,7 @@ class PostsController extends Controller
         $data = [];
         if(\Auth::check()) {
             $user = \Auth::user();
-            $posts = $user->posts()->orderBy('created_at','desc')->paginate(5);
+            $posts = $user->posts()->orderBy('created_at','desc')->paginate(25);
             
             $data = [
                 'user' => $user,
@@ -31,30 +34,42 @@ class PostsController extends Controller
     {
         $post = new Post;
         
-        // $post = Post::where('user_id')->first();
-        
         return view('posts.create',['post' => $post,]);
     }
     
     // 新規登録処理
     public function store(Request $request)
     {
-        $this->validate($request,[
-            'date' => 'required|max:191',
-            'workout' => 'required|max:191',
-            'weight' => 'required|max:191',
-            'repetition' => 'required|max:191',
-            'set' => 'required|max:191',
-        ]);
         
-        $request->user()->posts()->create([
-            'date' => $request->date,
-            'workout' => $request->workout,
-            'weight' => $request->weight,
-            'repetition' => $request->repetition,
-            'set' => $request->set,
-        ]);
-        
+        for($i = 0; $i<count($request->date); $i++){    
+            if($request->date[$i] === null){
+                break;
+            }else{
+                $post = new Post;
+                $post->date = $request->date[$i];
+                $post->workout = $request->workout[$i];
+                $post->weight = $request->weight[$i];
+                $post->repetition = $request->repetition[$i];
+                $post->set = $request->set[$i];
+                $post->user_id = \Auth::user()->id;
+
+                // validatorを作成
+                $validator = Validator::make($request->all(),[
+                    'date.0' => 'required',
+                    'workout.0' =>'required',
+                    'weight.0' =>'required',
+                    'repetition.0' =>'required',
+                    'set.0' =>'required',
+                    'user_id' =>'',
+                ]);
+
+                // バリデーションエラーの場合保存をスキップ
+                if ($validator->fails()) { 
+                    continue; 
+                }
+                $post->save();
+            }
+        }
         return redirect('/');
     }
     
