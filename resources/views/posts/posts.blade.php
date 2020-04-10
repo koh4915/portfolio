@@ -1,13 +1,13 @@
 <!--投稿一覧表示-->
 <ul class="list-unstyled">
-    
+    @foreach($records as $record)
         <li class="media mb-3">
-            <img class="mr-2 rounded" src="{{ Gravatar::src($user->email, 80) }}" alt="">
+            <img class="mr-2 rounded" src="{{ Gravatar::src($record['user']->email, 80) }}" alt="">  
             <div class="media-body">
                 <div class="text-left">
-                    {!! link_to_route('users.show', $user->name, ['id' => $user->id]) !!}
+                    {!! link_to_route('users.show', $record['user']->name, [ 'id' => $record['user']->id ]) !!}
                 </div>
-                <div class>
+                <div>
                     <table class="table table-bordered">
                         <thead>
                             <tr>
@@ -19,20 +19,21 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($posts as $post)
+                        @foreach ($record["posts"] as $row)
                             <tr>
-                                <td>{{ $post->date }}</td>
-                                <td>{{ $post->workout }}</td>
-                                <td>{{ $post->weight}}</td>
-                                <td>{{ $post->repetition }}</td>
-                                <td>{{ $post->set }}</td>
+                                <td>{{ $row->date }}</td>
+                                <td>{{ $row->workout}}</td>
+                                <td>{{ $row->weight }}</td>
+                                <td>{{ $row->repetition }}</td>
+                                <td>{{ $row->set }}</td>
                             </tr>
-                            @endforeach
+                        @endforeach    
                         </tbody>
                     </table>
                 </div>
             </div>
         </li>
-        
+    @endforeach    
 </ul>
-{{ $posts->links('pagination::bootstrap-4') }}
+
+{{ $groupedPosts->links() }}

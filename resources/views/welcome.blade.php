@@ -7,9 +7,9 @@
             <div class="row" style="margin-top:300px;">
                 
                 <!--投稿一覧表示-->
-                @if (count($posts) > 0)
+                @if (count($records) > 0)   <!--変更-->
                     <div class="col-sm-12" style="margin-top:50px;">
-                        @include('posts.posts', ['posts' => $posts])
+                        @include('posts.posts', ['records' => $records])   <!--変更-->
                     </div>  
                 @endif
                 

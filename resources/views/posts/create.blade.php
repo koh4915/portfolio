@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="text-center">
-        <h1>Create New</h1>
+        <h1><i>Create New</i></h1>
     </div>
         {!! Form::open(['url' => route("posts.store")]) !!}
             {{ csrf_field() }}

@@ -16,11 +16,9 @@
             
             
             <!--自分の投稿を表示-->
-            @if (count($posts) > 0)
-                @include('posts.posts', ['posts' => $posts])
+            @if (count($records) > 0)
+                @include('posts.posts', ['records' => $records])
             @endif
-            
-         {!! link_to_route('posts.create','新規作成(テスト)',[],['class' => 'btn btn-primary']) !!}
 
         </div>
 @endsection

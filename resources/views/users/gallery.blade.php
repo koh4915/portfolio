@@ -3,7 +3,7 @@
 @section('content')
 
 <div class="text-center">
-    <h1 style=>Motivation Gallery</h1>
+    <h1><i>Motivation Gallery</i></h1>
 </div>
 
 

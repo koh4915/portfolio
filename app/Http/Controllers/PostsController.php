@@ -2,12 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\DB;
+
 use Illuminate\Http\Request;
 
 use App\Post;
 
+use App\User;
+
 use Validator;
 
+// use Illuminate\Database\Eloquent\Collection; 
 
 class PostsController extends Controller
 {
@@ -15,19 +20,29 @@ class PostsController extends Controller
     // 一覧表示処理
     public function index()
     {
-        $data = [];
+        $records = [];
         if(\Auth::check()) {
             $user = \Auth::user();
-            $posts = $user->posts()->orderBy('created_at','desc')->paginate(25);
             
-            $data = [
-                'user' => $user,
-                'posts' => $posts,
-            ];
+            $groupedPosts = Post::distinct()->select('date','user_id')->orderBy('created_at', 'desc')->simplePaginate(5); 
+         
+            foreach($groupedPosts as $record) {
+                
+                $posts = Post::where('date',$record->date)->where('user_id',$record->user_id)->get();
+                $user = User::find($record->user_id);
+                
+                $records[] = [
+                                'date' => $record->date,
+                                'user' => $user,
+                                'posts' => $posts
+                             ];      
+            }
+            // dd($records);
         }
         
-        return view('welcome',$data);
+        return view('welcome',['records' => $records] , ['groupedPosts' => $groupedPosts]); 
     }
+    
     
     //新規登録画面表示処理
     public function create()
