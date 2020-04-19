@@ -28,7 +28,7 @@ class User extends Authenticatable
     ];
     
     // 一対多
-    public function posts()
+    public function records()
     {
         return $this->hasMany(Post::class);
     }

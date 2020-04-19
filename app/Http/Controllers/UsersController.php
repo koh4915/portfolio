@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use App\User;  //追加
+use App\User;  
+
+use App\Post; 
 
 class UsersController extends Controller
 {
@@ -13,25 +15,35 @@ class UsersController extends Controller
     {
         $users = User::orderBy('id','desc')->paginate(10);
         
-        return view('users.index',[
-            'users' => $users,
-        ]);
+        return view('users.index',['users' => $users,]);
     }
     
     // ユーザー詳細
     public function show($id)
     {
+        $records = [];
         $user = User::find($id);
-        $posts = $user->posts()->orderBy('created_at','desc')->paginate(5);
+        $groupedPosts = Post::distinct()->select('date','user_id')->orderBy('created_at', 'desc')->simplePaginate(5); 
         
-        $data = [
+        // dd($groupedPosts);
+        
+        foreach($groupedPosts as $record) {
+            
+            $posts = Post::where('date',$record->date)->where('user_id',$record->user_id)->get();
+            
+            $records[] = [
+                'date' => $record->date, 
+                'user' => $user,
+                'posts' => $posts,
+            ]; 
+            // dd($records);
+        }
+
+        return view('users.show',[
             'user' => $user,
-            'posts' => $posts,
-        ];
-        
-        $data += $this->counts($user);
-        
-        return view('users.show',$data);
+            'records' => $records,
+            'groupedPosts' => $groupedPosts
+            ]); 
     }
     
     

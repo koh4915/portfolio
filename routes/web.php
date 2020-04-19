@@ -13,8 +13,6 @@
 
 Route::get('/','PostsController@index');
 
-Route::resource('posts','PostsController');
-
 // ユーザ登録
 Route::get('signup', 'Auth\RegisterController@showRegistrationForm')->name('signup.get');
 Route::post('signup', 'Auth\RegisterController@register')->name('signup.post');
@@ -27,8 +25,17 @@ Route::get('logout', 'Auth\LoginController@logout')->name('logout.get');
 // ユーザ機能
 Route::group(['middleware' => ['auth']], function () {
     Route::resource('users', 'UsersController', ['only' => ['index', 'show']]);
-    Route::resource('posts', 'PostsController', ['only' => ['store', 'destroy']]);
+
+    Route::post('posts' , 'PostsController@store')->name('posts.store');
+    Route::post('posts/update' , 'PostsController@update')->name('posts.update');
+    Route::delete('posts/{date}' , 'PostsController@destroy')->name('posts.destroy');
+    // 補助ページ
+    Route::get('posts/create' , 'PostsController@create')->name('posts.create');
+    Route::get('posts/{date}/edit' , 'PostsController@edit')->name('posts.edit');
 });
 
+
+
+// 未使用
 Route::get('record', 'UsersController@record')->name('record');
 Route::get('gallery', 'UsersController@gallery')->name('gallery');

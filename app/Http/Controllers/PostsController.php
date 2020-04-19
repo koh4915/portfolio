@@ -21,6 +21,8 @@ class PostsController extends Controller
     public function index()
     {
         $records = [];
+        $groupedPosts = [];
+        
         if(\Auth::check()) {
             $user = \Auth::user();
             
@@ -30,9 +32,8 @@ class PostsController extends Controller
                 
                 $posts = Post::where('date',$record->date)->where('user_id',$record->user_id)->get();
                 $user = User::find($record->user_id);
-                
+                // dd($user);
                 $records[] = [
-                                'date' => $record->date,
                                 'user' => $user,
                                 'posts' => $posts
                              ];      
@@ -40,7 +41,10 @@ class PostsController extends Controller
             // dd($records);
         }
         
-        return view('welcome',['records' => $records] , ['groupedPosts' => $groupedPosts]); 
+        return view('welcome',[
+            'records' => $records,
+            'groupedPosts' => $groupedPosts
+            ]); 
     }
     
     
@@ -88,15 +92,59 @@ class PostsController extends Controller
         return redirect('/');
     }
     
-    // 削除処理
-    public function destroy($id)
+    // 投稿編集
+    public function edit($date)
     {
-        $post = \App\Post::first($id);
         
-        if(\Auth::id() === $post->user_id) {
-            $post->delete();
+        $groupedPost = Post::where('date' , $date)->get();
+        // dd($groupedPost);
+            
+        return view('posts.edit' , ['groupedPost' => $groupedPost]);
+    }
+    
+    
+    // 更新処理
+    public function update(Request $request)
+    {
+        // dd($request);
+         for($i = 0; $i<count($request->id); $i++){    
+
+            $post = Post::find($request->id[$i]);
+            $post->date = $request->date[$i];
+            $post->workout = $request->workout[$i];
+            $post->weight = $request->weight[$i];
+            $post->repetition = $request->repetition[$i];
+            $post->set = $request->set[$i];
+            $post->user_id = \Auth::user()->id;
+        
+            // validatorを作成
+            $validator = Validator::make($request->all(),[
+                'date.0' => 'required',
+                'workout.0' =>'required',
+                'weight.0' =>'required',
+                'repetition.0' =>'required',
+                'set.0' =>'required',
+                'user_id' =>'',
+            ]);
+        
+            // バリデーションエラーの場合保存をスキップ
+            if ($validator->fails()) { 
+                continue; 
+            }
+            $post->save();
         }
         
-        return back();
+            return redirect('/');
+    }
+    
+    
+    // 削除処理
+    public function destroy($date)
+    {
+        $post = Post::where('date' , $date)->delete();
+ 
+        // $post->delete();
+        
+        return redirect('/');
     }
 }

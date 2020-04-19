@@ -7,8 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 class Post extends Model
 {
     protected $fillable = [
-        'date', 'workout','weight','repetition','set',
+        'date','workout','weight','repetition','set',
         ];
+        
+    // protected $dates = ['date'];
         
         
     // 一対多数
