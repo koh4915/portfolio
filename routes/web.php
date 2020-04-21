@@ -43,9 +43,3 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('posts/create' , 'PostsController@create')->name('posts.create');
     Route::get('posts/{date}/{user}/edit' , 'PostsController@edit')->name('posts.edit');
 });
-
-
-
-// 未使用
-Route::get('record', 'UsersController@record')->name('record');
-Route::get('gallery', 'UsersController@gallery')->name('gallery');

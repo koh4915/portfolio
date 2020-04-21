@@ -16,11 +16,11 @@
                 </tr>
             @for($i = 0 ; $i <10; $i ++)
                 <tr>
-                    <td><input type="text" name="date[]" value=""></td>
-                    <td><input type="text" name="workout[]" value=""></td>
-                    <td><input type="text" name="weight[]" value=""></td>
-                    <td><input type="text" name="repetition[]" value=""></td>
-                    <td><input type="text" name="set[]" value=""></td>
+                    <td><input type="text" name="date[]" pattern="\d{4}-\d{2}-\d{2}"></td>
+                    <td><input type="text" name="workout[]"></td>
+                    <td><input type="text" name="weight[]" pattern="[1-9][0-9]*"></td>
+                    <td><input type="text" name="repetition[]" pattern="[1-9][0-9]*"></td>
+                    <td><input type="text" name="set[]" pattern="[1-9][0-9]*"></td>
                 </tr>
             @endfor   
             </table>

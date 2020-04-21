@@ -44,24 +44,10 @@ class UsersController extends Controller
     }
     
     
-    // カレンダーページ
-    public function record(){
-        
-        return view('users.record');
-    }
-    
-    
-    // ギャラリーページ
-    public function gallery(){
-        
-        return view('users.gallery');
-    }
-    
-    
     public function followings($id)
     {
         $user = User::find($id);
-        $followings = $user->followings()->simplePaginate(5);
+        $followings = $user->followings()->simplePaginate(10);
         
         $data = [
             'user' => $user,
@@ -75,7 +61,7 @@ class UsersController extends Controller
     public function followers($id)
     {
         $user = User::find($id);
-        $followers = $user->followers()->simplePaginate(5);
+        $followers = $user->followers()->simplePaginate(10);
         
         $data = [
             'user' => $user,

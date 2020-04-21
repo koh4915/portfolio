@@ -24,11 +24,11 @@
                     <tbody>
                         @foreach($groupedPost as $row)
                             <tr>
-                                <td><input type="text" name="date[]" value="{{$row->date}}" ></td>
+                                <td><input type="text" name="date[]" value="{{$row->date}}" pattern="\d{4}-\d{2}-\d{2}"></td>
                                 <td><input type="text" name="workout[]" value="{{$row->workout}}"></td>
-                                <td><input type="text" name="weight[]" value="{{$row->weight}}"></td>
-                                <td><input type="text" name="repetition[]" value="{{$row->repetition}}"></td>
-                                <td><input type="text" name="set[]" value="{{$row->set}}"></td>
+                                <td><input type="text" name="weight[]" value="{{$row->weight}}" pattern="[1-9][0-9]*"></td>
+                                <td><input type="text" name="repetition[]" value="{{$row->repetition}}" pattern="[1-9][0-9]*"></td>
+                                <td><input type="text" name="set[]" value="{{$row->set}}" pattern="[1-9][0-9]*"></td>
                                 <td><input type="hidden" name="id[]" value="{{$row->id}}" ></td>
                              </tr>
                         @endforeach    

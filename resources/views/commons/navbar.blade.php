@@ -11,7 +11,6 @@
             <ul class="navbar-nav">
                 @if (Auth::check())
                     <li class="nav-item">{!! link_to_route('posts.create', 'Record',[], ['class' => 'nav-link']) !!}</li>
-                    <!--<li class="nav-item">{!! link_to_route('gallery', 'Gallery',[], ['class' => 'nav-link']) !!}</li>-->
                     <li class="nav-item">{!! link_to_route('users.index', 'User', [], ['class' => 'nav-link']) !!}</li>
                     <li class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">{{ Auth::user()->name }}</a>
