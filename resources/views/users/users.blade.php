@@ -1,10 +1,10 @@
 @if (count($users) > 0)
     <ul class="list-unstyled">
         @foreach ($users as $user)
-            <li class="media">
-                <img class="mr-2 rounded" src="{{ Gravatar::src($user->email, 50) }}" alt="">
+            <li class="media" >
+                <img class="m-3 rounded" src="{{ Gravatar::src($user->email, 80) }}" alt="">
                 <div class="media-body">
-                    <div>
+                    <div class="mt-4">
                         {{ $user->name }}
                     </div>
                     <div>
@@ -14,5 +14,5 @@
             </li>
         @endforeach
     </ul>
-     {{ $users->links('pagination::bootstrap-4') }}
+     {{ $users->links() }}
 @endif

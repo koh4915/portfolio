@@ -56,10 +56,11 @@ class PostsController extends Controller
         return view('posts.create',['post' => $post,]);
     }
     
+    
     // 新規登録処理
     public function store(Request $request)
     {
-        
+        // dd($request);
         for($i = 0; $i<count($request->date); $i++){    
             if($request->date[$i] === null){
                 break;
@@ -92,11 +93,12 @@ class PostsController extends Controller
         return redirect('/');
     }
     
+    
     // 投稿編集
-    public function edit($date)
+    public function edit($date,$user)
     {
-        
-        $groupedPost = Post::where('date' , $date)->get();
+
+        $groupedPost = Post::where('user_id' , $user)->where('date' , $date)->get();
         // dd($groupedPost);
             
         return view('posts.edit' , ['groupedPost' => $groupedPost]);
@@ -106,7 +108,6 @@ class PostsController extends Controller
     // 更新処理
     public function update(Request $request)
     {
-        // dd($request);
          for($i = 0; $i<count($request->id); $i++){    
 
             $post = Post::find($request->id[$i]);
@@ -116,7 +117,7 @@ class PostsController extends Controller
             $post->repetition = $request->repetition[$i];
             $post->set = $request->set[$i];
             $post->user_id = \Auth::user()->id;
-        
+        // dd($post);
             // validatorを作成
             $validator = Validator::make($request->all(),[
                 'date.0' => 'required',
@@ -139,10 +140,10 @@ class PostsController extends Controller
     
     
     // 削除処理
-    public function destroy($date)
+    public function destroy($date , $user)
     {
-        $post = Post::where('date' , $date)->delete();
- 
+        $post = Post::where('user_id' , $user)->where('date' , $date)->delete();
+        
         // $post->delete();
         
         return redirect('/');

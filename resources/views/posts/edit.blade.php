@@ -35,11 +35,11 @@
                     </tbody>
                 </table>
             
-                <div align="center" style="margin-top:80px;">{!! Form::submit(' Update ',['class' => 'btn btn-primary btn-lg']) !!}</div>    
+                <div align="center" style="margin-top:80px;">{!! Form::submit(' Update ',['class' => 'btn btn-outline-info btn-lg']) !!}</div>    
             {!! Form::close() !!}
             
-            {!! Form::open(['route' => ['posts.destroy', 'date' =>$row->date], 'method' => 'delete']) !!}
-                <div align="center" style="margin-top:30px;">{!! Form::submit(' Delete ', ['class' => 'btn btn-danger btn-lg']) !!}</div>    
+            {!! Form::open(['route' => ['posts.destroy', 'date' =>$row->date , 'user' => $row->user_id], 'method' => 'delete']) !!}
+                <div align="center" style="margin-top:30px;">{!! Form::submit(' Delete ', ['class' => 'btn btn-outline-danger btn-lg']) !!}</div>    
             {!! Form::close() !!}
             
         </div>

@@ -21,29 +21,26 @@ class UsersController extends Controller
     // ユーザー詳細
     public function show($id)
     {
-        $records = [];
         $user = User::find($id);
-        $groupedPosts = Post::distinct()->select('date','user_id')->orderBy('created_at', 'desc')->simplePaginate(5); 
+        $groupedPosts = Post::distinct()->where('user_id' , $user->id)->select('date','user_id')->orderBy('created_at', 'desc')->simplePaginate(5); 
         
-        // dd($groupedPosts);
-        
+        $records = [];
         foreach($groupedPosts as $record) {
             
             $posts = Post::where('date',$record->date)->where('user_id',$record->user_id)->get();
             
             $records[] = [
                 'date' => $record->date, 
-                'user' => $user,
+                'user' =>$user,
                 'posts' => $posts,
             ]; 
-            // dd($records);
         }
-
+        
         return view('users.show',[
             'user' => $user,
             'records' => $records,
             'groupedPosts' => $groupedPosts
-            ]); 
+        ]); 
     }
     
     
@@ -60,4 +57,31 @@ class UsersController extends Controller
         return view('users.gallery');
     }
     
+    
+    public function followings($id)
+    {
+        $user = User::find($id);
+        $followings = $user->followings()->simplePaginate(5);
+        
+        $data = [
+            'user' => $user,
+            'users' => $followings,
+        ];
+        // dd($data);
+        return view('users.followings' , $data);
+    }
+    
+    
+    public function followers($id)
+    {
+        $user = User::find($id);
+        $followers = $user->followers()->simplePaginate(5);
+        
+        $data = [
+            'user' => $user,
+            'users' => $followers,
+        ];
+        
+        return view('users.followers' , $data);
+    }
 }

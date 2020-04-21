@@ -25,13 +25,23 @@ Route::get('logout', 'Auth\LoginController@logout')->name('logout.get');
 // ユーザ機能
 Route::group(['middleware' => ['auth']], function () {
     Route::resource('users', 'UsersController', ['only' => ['index', 'show']]);
+    
+    Route::group(['prefix' => 'users/{id}'], function() {
+        // フォロー・アンフォロー
+        Route::post('follow' , 'UserFollowController@store')->name('user.follow');
+        Route::delete('unfollow' , 'UserFollowController@destroy')->name('user.unfollow');
+        
+        // フォローしている人とフォローされている人を一覧表示
+        Route::get('followings' , 'UsersController@followings')->name('users.followings');
+        Route::get('followers' , 'UsersController@followers')->name('users.followers');
+    });
 
     Route::post('posts' , 'PostsController@store')->name('posts.store');
     Route::post('posts/update' , 'PostsController@update')->name('posts.update');
-    Route::delete('posts/{date}' , 'PostsController@destroy')->name('posts.destroy');
+    Route::delete('posts/{date}/{user}' , 'PostsController@destroy')->name('posts.destroy');
     // 補助ページ
     Route::get('posts/create' , 'PostsController@create')->name('posts.create');
-    Route::get('posts/{date}/edit' , 'PostsController@edit')->name('posts.edit');
+    Route::get('posts/{date}/{user}/edit' , 'PostsController@edit')->name('posts.edit');
 });
 
 
