@@ -26,7 +26,7 @@ class PostsController extends Controller
         if(\Auth::check()) {
             $user = \Auth::user();
             
-            $groupedPosts = Post::distinct()->select('date','user_id')->orderBy('created_at', 'desc')->simplePaginate(5); 
+            $groupedPosts = Post::distinct()->select('date','user_id')->orderBy('date', 'desc')->simplePaginate(5); 
          
             foreach($groupedPosts as $record) {
                 

@@ -22,7 +22,7 @@ class UsersController extends Controller
     public function show($id)
     {
         $user = User::find($id);
-        $groupedPosts = Post::distinct()->where('user_id' , $user->id)->select('date','user_id')->orderBy('created_at', 'desc')->simplePaginate(5); 
+        $groupedPosts = Post::distinct()->where('user_id' , $user->id)->select('date','user_id')->orderBy('date', 'desc')->simplePaginate(5); 
         
         $records = [];
         foreach($groupedPosts as $record) {
