@@ -8,10 +8,20 @@
         
         <style>
             html, body {
-                background-color: black;
+                background-color:black;
                 color:white;
                 font-family: 'Raleway', sans-serif;
             }
+            
+            .jumbotron{
+                background-color:transparent;
+                margin-top:150px;
+            }
+            
+            .jumbotron h1 {
+                font-size:10vw;
+            }
+
         </style>
         
     </head>
