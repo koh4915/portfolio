@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="text-center">
-        <h1>Log in</h1>
+        <h1><i>Login</i></h1>
     </div>
 
     <div class="row">
@@ -25,4 +25,6 @@
             <p class="mt-2">New user? {!! link_to_route('signup.get', 'Sign up now') !!}</p>
         </div>
     </div>
+        
+    <div class="loginpass">Email : test@test.test , Password : test123</div>
 @endsection

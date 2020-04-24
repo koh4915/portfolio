@@ -50,17 +50,13 @@ class User extends Authenticatable
     
     public function follow($userId)
     {
-        // 既にフォロー
         $exist = $this->is_following($userId);
         
-        // 相手が自分自身
         $its_me = $this->id == $userId;
     
         if($exist || $its_me){
-            // どちらか当てはまれば何もしない
             return false;
         }else{
-            // フォロー
             $this->followings()->attach($userId);
             return true;
         }
@@ -69,24 +65,19 @@ class User extends Authenticatable
     
     public function unfollow($userId)
     {
-        // 既にフォロー
         $exist = $this->is_following($userId);
         
-        // 相手が自分自身
         $its_me = $this->id ==$userId;
         
         if($exist && !$its_me){
-            // ２つとも当てはまればフォローを外す
             $this->followings()->detach($userId);
             return true;
         }else{
-            // 何もしない
             return false;
         }
     }
     
     
-    // フォローしているかの判定
     public function is_following($userId)
     {
         return $this->followings()->where('follow_id' , $userId)->exists();

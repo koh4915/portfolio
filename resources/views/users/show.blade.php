@@ -13,7 +13,7 @@
                         <div>
                             @if(Auth::id() == $user->id)
                                 <div class="text-left">
-                                    {!! link_to_route('posts.edit', $record['date'], [ 'date' => $record['date'] , 'user' => $user ]) !!}  <!--投稿編集ページへ-->
+                                    {!! link_to_route('posts.edit', $record['date'], [ 'date' => $record['date'] , 'user' => $user ]) !!} 
                                 </div>
                             @endif
                             <table class="table table-bordered">

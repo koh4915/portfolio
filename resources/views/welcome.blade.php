@@ -8,7 +8,6 @@
             </div>
         </div>    
         
-        <!--投稿一覧表示-->
         <div style="margin-top:350px;">
             @if (count($records) > 0)
                 @include('posts.posts')
@@ -19,5 +18,7 @@
              <h1>{!! link_to_route('signup.get', 'Sign up', [], ['style' => 'color:white;' , 'class' => 'nav-link']) !!}</h1>
         </div>
     @endif
+    
+    <div class="loginpass">Email : test@test.test , Password : test123</div>
 @endsection
 

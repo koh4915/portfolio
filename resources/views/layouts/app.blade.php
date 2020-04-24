@@ -22,6 +22,10 @@
                 font-size:10vw;
             }
 
+            .loginpass {
+                text-align: center;
+                margin-top: 30%;
+            }
         </style>
         
     </head>

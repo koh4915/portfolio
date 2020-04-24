@@ -12,8 +12,6 @@ use App\User;
 
 use Validator;
 
-// use Illuminate\Database\Eloquent\Collection; 
-
 class PostsController extends Controller
 {
     
@@ -32,13 +30,11 @@ class PostsController extends Controller
                 
                 $posts = Post::where('date',$record->date)->where('user_id',$record->user_id)->get();
                 $user = User::find($record->user_id);
-                // dd($user);
                 $records[] = [
                                 'user' => $user,
                                 'posts' => $posts
                              ];      
             }
-            // dd($records);
         }
         
         return view('welcome',[
@@ -60,7 +56,6 @@ class PostsController extends Controller
     // 新規登録処理
     public function store(Request $request)
     {
-        // dd($request);
         for($i = 0; $i<count($request->date); $i++){    
             if($request->date[$i] === null){
                 break;
@@ -73,7 +68,6 @@ class PostsController extends Controller
                 $post->set = $request->set[$i];
                 $post->user_id = \Auth::user()->id;
 
-                // validatorを作成
                 $validator = Validator::make($request->all(),[
                     'date.0' => 'required',
                     'workout.0' =>'required',
@@ -83,7 +77,6 @@ class PostsController extends Controller
                     'user_id' =>'',
                 ]);
 
-                // バリデーションエラーの場合保存をスキップ
                 if ($validator->fails()) { 
                     continue; 
                 }
@@ -99,7 +92,6 @@ class PostsController extends Controller
     {
 
         $groupedPost = Post::where('user_id' , $user)->where('date' , $date)->get();
-        // dd($groupedPost);
             
         return view('posts.edit' , ['groupedPost' => $groupedPost]);
     }
@@ -117,8 +109,7 @@ class PostsController extends Controller
             $post->repetition = $request->repetition[$i];
             $post->set = $request->set[$i];
             $post->user_id = \Auth::user()->id;
-        // dd($post);
-            // validatorを作成
+
             $validator = Validator::make($request->all(),[
                 'date.0' => 'required',
                 'workout.0' =>'required',
@@ -128,7 +119,6 @@ class PostsController extends Controller
                 'user_id' =>'',
             ]);
         
-            // バリデーションエラーの場合保存をスキップ
             if ($validator->fails()) { 
                 continue; 
             }
@@ -143,8 +133,6 @@ class PostsController extends Controller
     public function destroy($date , $user)
     {
         $post = Post::where('user_id' , $user)->where('date' , $date)->delete();
-        
-        // $post->delete();
         
         return redirect('/');
     }

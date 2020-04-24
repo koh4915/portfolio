@@ -13,7 +13,7 @@ class UsersController extends Controller
     // ユーザー一覧
     public function index()
     {
-        $users = User::orderBy('id','desc')->paginate(10);
+        $users = User::orderBy('id','desc')->simplePaginate(10);
         
         return view('users.index',['users' => $users,]);
     }
@@ -53,7 +53,6 @@ class UsersController extends Controller
             'user' => $user,
             'users' => $followings,
         ];
-        // dd($data);
         return view('users.followings' , $data);
     }
     

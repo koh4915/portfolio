@@ -31,7 +31,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('follow' , 'UserFollowController@store')->name('user.follow');
         Route::delete('unfollow' , 'UserFollowController@destroy')->name('user.unfollow');
         
-        // フォローしている人とフォローされている人を一覧表示
+        // フォロー・フォロワー一覧表示
         Route::get('followings' , 'UsersController@followings')->name('users.followings');
         Route::get('followers' , 'UsersController@followers')->name('users.followers');
     });
